@@ -70,14 +70,52 @@ Date and venue: 3 November 2025 at 14:00, Union Hall.
 
 ## II. Calculation Section: Reference Procedures
 
-### 1. K‑means SSE
-SSE = \(\sum_{i=1}^{K} \sum_{x \in C_i} \text{dist}(x, m_i)^2\).
+### 1. K-means SSE
 
-### 2. HAC Linkage Updates (distance matrices)
-Single link: \(D(C_i, C_j) = \min\{ \text{dist}(p_a, p_b) : p_a \in C_i, p_b \in C_j \}\).  
-Complete link: \(D(C_i, C_j) = \max\{ \cdot \}\).  
-Group average: mean of all pairwise distances across clusters.  
-Ward: choose merge with smallest increase in SSE.
+The objective function is:
+
+$$
+SSE = \sum_{i=1}^{K} \sum_{x \in C_i} \text{dist}(x, m_i)^2
+$$
+
+Where:  
+- \( K \): number of clusters  
+- \( C_i \): cluster i  
+- \( x \): data point in cluster \( C_i \)  
+- \( m_i \): centroid of cluster \( C_i \)  
+- \( \text{dist}(x, m_i) \): typically Euclidean distance  
+
+---
+
+### 2. HAC Linkage Updates (Distance Matrices)
+
+**Single Link (MIN):**
+
+$$
+D(C_i, C_j) = \min_{p_a \in C_i,\, p_b \in C_j} \text{dist}(p_a, p_b)
+$$
+
+**Complete Link (MAX):**
+
+$$
+D(C_i, C_j) = \max_{p_a \in C_i,\, p_b \in C_j} \text{dist}(p_a, p_b)
+$$
+
+**Group Average:**
+
+$$
+D(C_i, C_j) = \frac{1}{|C_i| \times |C_j|} 
+\sum_{p_a \in C_i} \sum_{p_b \in C_j} \text{dist}(p_a, p_b)
+$$
+
+**Ward’s Method (Increase in SSE):**
+
+$$
+\Delta SSE = \frac{n_i \times n_j}{n_i + n_j} (m_i - m_j)^2
+$$
+
+Where \( n_i, n_j \) are the sizes and \( m_i, m_j \) are the means of clusters \( i \) and \( j \).
+
 
 ### 3. Similarity matrices
 When using similarity rather than distance, the merge rule flips: choose the largest similarity at each step; update rules use max/min accordingly.
@@ -92,12 +130,125 @@ When using similarity rather than distance, the merge rule flips: choose the lar
 
 ## IV. Multiple Choice Questions (Answers at right)
 
-1. Which linkage handles non‑elliptical shapes but is noise‑sensitive?  Answer: C (Single link).  
-2. K‑means minimizes which objective?  Answer: B (SSE).  
-3. With a similarity matrix, which value indicates the closest pair to merge?  Answer: D (largest similarity).  
-4. In DBSCAN, a non‑core point within ε of a core is called what?  Answer: D (border point).  
-5. What choice most strongly influences K‑means results?  Answer: C (initial centroids).  
-6. Strength of hierarchical vs K‑means?  Answer: D (don’t need K in advance).
+## V. Multiple Choice Questions (with Options and Answers)
+
+### Q1. Which Agglomerative linkage method is characterized by being susceptible to noise but effective at handling non-elliptical cluster shapes?
+
+A. MAX (Complete Link)  
+B. Ward’s Method  
+C. MIN (Single Link)  
+D. Group Average  
+
+**Answer:** C (Single Link)
+
+---
+
+### Q2. In K-means clustering, what is the typical objective function that the algorithm iteratively seeks to minimize?
+
+A. Maximum Distance Error  
+B. Sum of Squared Error (SSE)  
+C. Euclidean Distance of Centroids  
+D. Information Gain  
+
+**Answer:** B (Sum of Squared Error)
+
+---
+
+### Q3. If you are analyzing a *Similarity Matrix* in Agglomerative Clustering, which value should you look for at each step to identify the two closest clusters for merging?
+
+A. The smallest non-zero distance value  
+B. The average similarity value  
+C. The smallest similarity value  
+D. The largest similarity value  
+
+**Answer:** D (The largest similarity value)
+
+---
+
+### Q4. In DBSCAN, a point that is not a core point but is located within the ε-neighborhood of a core point is classified as:
+
+A. Noise Point  
+B. Centroid  
+C. Prototype Point  
+D. Border Point  
+
+**Answer:** D (Border Point)
+
+---
+
+### Q5. What crucial step in the K-means algorithm significantly influences the final clustering output and can lead to suboptimal results if chosen poorly?
+
+A. Calculating the Sum of Squared Error (SSE)  
+B. Defining the number of clusters (K)  
+C. Selection of initial centroids  
+D. Calculating the complexity \(O(n \cdot K \cdot I \cdot d)\)  
+
+**Answer:** C (Selection of initial centroids)
+
+---
+
+### Q6. A strength of Hierarchical Clustering, compared to K-means, is that:
+
+A. It is less susceptible to noise  
+B. It always achieves the globally optimal SSE  
+C. It is better suited for high-dimensional data  
+D. The number of clusters does not need to be assumed beforehand  
+
+**Answer:** D (The number of clusters does not need to be assumed beforehand)
+### Q7. Which of the following statements about K-means clustering are TRUE?
+
+A. K-means can fail when clusters have different densities.  
+B. K-means tends to produce spherical (globular) clusters.  
+C. K-means can automatically determine the optimal number of clusters K.  
+D. K-means minimizes the within-cluster sum of squared errors.  
+
+**Correct Answers:** A, B, D  
+
+**Explanation:**  
+K-means assumes clusters are roughly spherical and similar in size; it minimizes SSE but cannot infer K automatically.
+
+---
+
+### Q8. Which of the following are TRUE for Hierarchical Agglomerative Clustering (HAC)?
+
+A. The proximity matrix must be precomputed.  
+B. The algorithm can be stopped at any level to obtain K clusters.  
+C. Once two clusters are merged, the operation cannot be undone.  
+D. HAC always requires specifying K before the algorithm starts.  
+
+**Correct Answers:** A, B, C  
+
+**Explanation:**  
+HAC uses a fixed proximity matrix and is irreversible. The dendrogram can be cut afterward to choose any K; it doesn’t need K in advance.
+
+---
+
+### Q9. Which statements about DBSCAN are TRUE?
+
+A. It can discover clusters of arbitrary shape.  
+B. It is sensitive to both ε (Eps) and MinPts parameters.  
+C. It is suitable for detecting high-dimensional clusters easily.  
+D. It automatically identifies and excludes noise points.  
+
+**Correct Answers:** A, B, D  
+
+**Explanation:**  
+DBSCAN is powerful for irregular shapes and noise handling but breaks down in high dimensions (curse of dimensionality).
+
+---
+
+### Q10. Which of the following can help reduce the impact of initialization in K-means?
+
+A. Using K-means++ initialization.  
+B. Running the algorithm multiple times with different random seeds.  
+C. Scaling features before clustering.  
+D. Using Ward’s method to pre-cluster and initialize centroids.  
+
+**Correct Answers:** A, B, C, D  
+
+**Explanation:**  
+All these methods improve initialization: K-means++ gives better starting centroids, multiple runs reduce randomness, scaling ensures fair distance comparisons, and Ward linkage can seed centroids from hierarchical structure.
+
 
 ## V. Worked HAC Examples From Lecture Matrix
 
