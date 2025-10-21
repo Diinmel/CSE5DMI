@@ -58,15 +58,6 @@ Definition: Clusters are dense regions separated by sparse regions.
 | Noise point | Neither core nor border. | Naturally discarded; robust to outliers. |
 | Strengths/limits | Good for irregular shapes and outlier resistance; struggles with varying densities or very high dimensions. | Scaling and distance choice matter. |
 
-### E. Exam Information (Week 12 Review)
-
-Date and venue: 3 November 2025 at 14:00, Union Hall.
-
-| Item | Details |
-| :--- | :--- |
-| Format | 6 questions total: 6 MCQs (Q1: 40 marks) and 5 calculation questions (Q2–Q6: total 80 marks). Focus is MCQ and calculations; memorizing long definitions is not required. |
-| Duration | 2 hours plus 15 minutes reading time. |
-| Allowed materials | Non‑programmable calculator; one A4 page of handwritten notes (two‑sided). Write down key equations (e.g., probability, SSE, silhouette). |
 
 ## II. Calculation Section: Reference Procedures
 
