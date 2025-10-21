@@ -1,4 +1,4 @@
-# Week 07 — Overfitting, Pruning, and Model Evaluation
+# Week 04 — Overfitting, Pruning, and Model Evaluation
 
 ## 1. Overfitting and Underfitting
 
