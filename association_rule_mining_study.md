@@ -91,7 +91,7 @@ Given the contingency table for 1000 people (T: Tea, C: Coffee):
 
 **Q1. Support({Tea, Coffee}) = 150 / 1000 = 0.15**
 
-**Q2. Confidence(¬Tea → Coffee) = 650 / 800 = 0.8125**
+**Q2. Confidence(¬Tea → Coffee) = 150 / 200 = 0.75**
 
 **Q3. Interest(Tea → Coffee) = 0.15 / (0.2 × 0.8) = 0.9375 → negatively correlated.**
 
