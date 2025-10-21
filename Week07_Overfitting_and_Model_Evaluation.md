@@ -51,16 +51,10 @@ Node A has 30 samples (20 Yes, 10 No), Ω = 0.5.
 
 | Situation | Training Error err(T) | Leaf Count k | Pessimistic E_gen(T) | Decision |
 |------------|----------------------|---------------|----------------------|-----------|
-| Prune (A → leaf) | 10/30 | 1 | 0.333 + 0.5×(1/30)=0.350 | — |
-| Keep split (4 leaves) | 9/30 | 4 | 0.300 + 0.5×(4/30)=0.367 | Prune |
+| Prune (A → leaf) | 10/30 | 1 | 0.333 + 0.5×(1/30)=0.350 | Prune |
+| Keep split (4 leaves) | 9/30 | 4 | 0.300 + 0.5×(4/30)=0.367 | - |
 
-## 4. Impurity Measures
-
-- Gini = 1 − Σ(p_i²)
-- Entropy = −Σ(p_i log₂ p_i)
-- Information Gain = Entropy(parent) − Σ(weighted Entropy(children))
-
-## 5. Confusion Matrix and Error Types
+## 4. Confusion Matrix and Error Types
 
 | | Predicted Positive (P) | Predicted Negative (N) |
 | :--- | :--- | :--- |
@@ -76,25 +70,22 @@ Derived metrics:
 - Recall = TP / (TP + FN)
 - F1 = 2 × (Precision × Recall) / (Precision + Recall)
 
-## 6. Evaluation Enhancements
+## 5. Evaluation Enhancements
 
 - Cost Matrix assigns penalty weights to FP and FN.
 - Validation Set tunes parameters like Ω before final testing.
 - Cross-Validation estimates robustness.
 - Stratified CV preserves class proportions for imbalanced datasets.
 
-## 7. Calculation Practice Questions
+## 6. Calculation Practice Questions
 
-Q1. Node: 28 Yes, 12 No. Compute Gini Index.
-→ p_yes=0.7, p_no=0.3 → Gini=1−(0.7²+0.3²)=0.42.
+Q1. TP=45, FP=5, FN=15, TN=35. Compute Accuracy, Precision, Recall, and F1.
 
-Q2. TP=45, FP=5, FN=15, TN=35. Compute Accuracy, Precision, Recall, and F1.
+Q2. Leaf node: 50 samples, 38 correct. Compute optimistic & pessimistic errors if Ω=0.5, k=2, N_train=200.
 
-Q3. Leaf node: 50 samples, 38 correct. Compute optimistic & pessimistic errors if Ω=0.5, k=2, N_train=200.
+Q3. Parent entropy=0.94; child nodes 30% & 70% with entropies 0.8 & 0.5. Compute Information Gain.
 
-Q4. Parent entropy=0.94; child nodes 30% & 70% with entropies 0.8 & 0.5. Compute Information Gain.
-
-Q5. 5-fold F1 scores=[0.81, 0.79, 0.83, 0.77, 0.80]. Compute mean ± std.
+Q4. 5-fold F1 scores=[0.81, 0.79, 0.83, 0.77, 0.80]. Compute mean ± std.
 
 ## 8. Multi-Select Theory Questions
 
@@ -127,3 +118,207 @@ a) Same class proportion across folds
 b) Random splits ignoring class
 c) More data in training folds
 d) Equal sampling across classes
+
+---
+
+## 9. Answers and Explanations
+
+### Q1. Gini Index Calculation
+
+Given: 28 “Yes”, 12 “No”  
+p(Yes) = 28/40 = 0.7  
+p(No) = 12/40 = 0.3  
+
+**Gini = 1 − (p(Yes)² + p(No)²)**  
+= 1 − (0.7² + 0.3²) = **0.42**
+
+→ Moderate impurity; node is not perfectly pure.
+
+---
+
+### Q2. Confusion Matrix Metrics
+
+TP = 45, FP = 5, FN = 15, TN = 35  
+
+**Accuracy = (TP + TN) / (TP + FP + FN + TN)**  
+= (45 + 35) / 100 = **0.80**
+
+**Precision = TP / (TP + FP)**  
+= 45 / (45 + 5) = **0.90**
+
+**Recall = TP / (TP + FN)**  
+= 45 / (45 + 15) = **0.75**
+
+**F1 = 2 × (Precision × Recall) / (Precision + Recall)**  
+= 2 × (0.9 × 0.75) / (0.9 + 0.75) = **0.818**
+
+→ The model achieves 80% accuracy, but recall is lower than precision, meaning it misses some positives.
+
+---
+
+### Q3. Optimistic vs Pessimistic Error
+
+Leaf node: 50 samples, 38 correct → 12 incorrect.  
+Ω = 0.5, k = 2, N_train = 200.
+
+**Optimistic error:**  
+err(T) = 12 / 50 = 0.24
+
+**Pessimistic error:**  
+E_gen(T) = err(T) + Ω × (k / N_train)  
+= 0.24 + 0.5 × (2 / 200)  
+= 0.24 + 0.005 = **0.245**
+
+→ Slightly higher due to complexity penalty.
+
+---
+
+### Q4. Information Gain
+
+Entropy(parent) = 0.94  
+Children:  
+- Node A (30%) → Entropy = 0.8  
+- Node B (70%) → Entropy = 0.5  
+
+**Weighted entropy = 0.3×0.8 + 0.7×0.5 = 0.24 + 0.35 = 0.59**
+
+**Information Gain = 0.94 − 0.59 = 0.35**
+
+→ Splitting reduces uncertainty by 0.35 bits.
+
+---
+
+### Q5. Cross-Validation Mean ± Std
+
+F1 scores: [0.81, 0.79, 0.83, 0.77, 0.80]
+
+**Mean = (Σ scores) / n = 0.80**  
+**Standard deviation = √(Σ(x−mean)² / (n−1)) = 0.022**
+
+→ **F1 = 0.80 ± 0.02**
+
+→ Consistent model performance across folds.
+
+---
+
+---
+
+## 9. Answers and Explanations
+
+### Q1. Gini Index Calculation
+
+Given: 28 “Yes”, 12 “No”  
+p(Yes) = 28/40 = 0.7  
+p(No) = 12/40 = 0.3  
+
+**Gini = 1 − (p(Yes)² + p(No)²)**  
+= 1 − (0.7² + 0.3²) = **0.42**
+
+→ Moderate impurity; node is not perfectly pure.
+
+---
+
+### Q2. Confusion Matrix Metrics
+
+TP = 45, FP = 5, FN = 15, TN = 35  
+
+**Accuracy = (TP + TN) / (TP + FP + FN + TN)**  
+= (45 + 35) / 100 = **0.80**
+
+**Precision = TP / (TP + FP)**  
+= 45 / (45 + 5) = **0.90**
+
+**Recall = TP / (TP + FN)**  
+= 45 / (45 + 15) = **0.75**
+
+**F1 = 2 × (Precision × Recall) / (Precision + Recall)**  
+= 2 × (0.9 × 0.75) / (0.9 + 0.75) = **0.818**
+
+→ The model achieves 80% accuracy, but recall is lower than precision, meaning it misses some positives.
+
+---
+
+### Q3. Optimistic vs Pessimistic Error
+
+Leaf node: 50 samples, 38 correct → 12 incorrect.  
+Ω = 0.5, k = 2, N_train = 200.
+
+**Optimistic error:**  
+err(T) = 12 / 50 = 0.24
+
+**Pessimistic error:**  
+E_gen(T) = err(T) + Ω × (k / N_train)  
+= 0.24 + 0.5 × (2 / 200)  
+= 0.24 + 0.005 = **0.245**
+
+→ Slightly higher due to complexity penalty.
+
+---
+
+### Q4. Information Gain
+
+Entropy(parent) = 0.94  
+Children:  
+- Node A (30%) → Entropy = 0.8  
+- Node B (70%) → Entropy = 0.5  
+
+**Weighted entropy = 0.3×0.8 + 0.7×0.5 = 0.24 + 0.35 = 0.59**
+
+**Information Gain = 0.94 − 0.59 = 0.35**
+
+→ Splitting reduces uncertainty by 0.35 bits.
+
+---
+
+### Q5. Cross-Validation Mean ± Std
+
+F1 scores: [0.81, 0.79, 0.83, 0.77, 0.80]
+
+**Mean = (Σ scores) / n = 0.80**  
+**Standard deviation = √(Σ(x−mean)² / (n−1)) = 0.022**
+
+→ **F1 = 0.80 ± 0.02**
+
+→ Consistent model performance across folds.
+
+---
+
+### T1. Overfitting reduction
+
+✅ a) Using cross-validation  
+✅ d) Pruning the model  
+❌ b), c)
+
+---
+
+### T2. Pre-pruning stops when
+
+✅ a) Class impurity improvement is negligible  
+✅ c) Node sample size is below threshold  
+❌ b), d)
+
+---
+
+### T3. Accuracy is misleading when
+
+✅ b) Classes are highly imbalanced  
+✅ c) Misclassification costs differ  
+❌ a), d)
+
+---
+
+### T4. False Negatives correspond to
+
+✅ a) Predict “No” when actual “Yes”  
+✅ d) Type II error  
+❌ b), c)
+
+---
+
+### T5. Stratified Cross-Validation ensures
+
+✅ a) Same class proportion across folds  
+✅ d) Equal sampling across classes  
+❌ b), c)
+
+
